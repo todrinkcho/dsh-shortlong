@@ -1,0 +1,3 @@
+- insert:
+    - id: shortlong-mode
+      name: '@todrink/dsh-shortlong'

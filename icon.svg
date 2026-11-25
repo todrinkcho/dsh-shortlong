@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="短考 / 长考">
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="#1b1b1b" />
+  <path d="M20 44c0-10 4-16 12-16s12 6 12 16" fill="none" stroke="#f0a020" stroke-width="4" stroke-linecap="round" />
+  <circle cx="32" cy="22" r="6" fill="#f0a020" />
+</svg>

@@ -1,0 +1,61 @@
+{
+  "name": "@todrink/dsh-shortlong",
+  "version": "1.1.0",
+  "type": "module",
+  "description": "短考 / 长考：会话级行为契约开关（session-scoped short-form vs long-form working mode）。",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18",
+    "dsh": ">=0.2.2-rc.5"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "dsh-plugin",
+    "dsh-bundle",
+    "mode",
+    "prompt",
+    "workflow",
+    "style",
+    "ui"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "todrink",
+    "url": "https://github.com/todrinkcho"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/todrinkcho/dsh-shortlong.git"
+  },
+  "homepage": "https://github.com/todrinkcho/dsh-shortlong#readme",
+  "bugs": {
+    "url": "https://github.com/todrinkcho/dsh-shortlong/issues"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  }
+}
