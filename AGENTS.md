@@ -66,5 +66,5 @@ DSH 插件：会话级的「短考 / 长考」开关。输入框右侧一个双�
 
 ## 别动
 
-- 不要手改 `~/.dsh/profiles/desktop/package.json` 或 `cordis.patch.yml`（`install_bundle` 负责）。
+- 不要手改 `~/.dsh/profiles/<profile>/package.json` 或 `cordis.patch.yml`（`install_bundle` 负责）。
 - 不要把 `app.asar` 里的东西解出来改。
