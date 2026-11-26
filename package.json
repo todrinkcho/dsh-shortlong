@@ -1,6 +1,6 @@
 {
   "name": "@todrink/dsh-shortlong",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "type": "module",
   "description": "短考 / 长考：会话级行为契约开关（session-scoped short-form vs long-form working mode）。",
   "exports": {
