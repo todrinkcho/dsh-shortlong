@@ -45,18 +45,16 @@ DSH 插件：会话级的「短考 / 长考」开关。输入框右侧一个双�
   - 长考的 `tools.restrict` 只在 `agent/pre-step` 与切到长考后的下一步生效；还没在真实长考回合里观察一次日志确认没抛错（已 try/catch + 告警，不会挂）。
   - 未接 locale 服务，按钮文案是写死的中文（与 `locale/*.json` 里的插件标题分开）。
 
-## 2026-11-23 修复：切会话、重启后按钮显示短考
+## 坑（已修，别再犯）
 
-- 现象：点「长考」后切走再切回，按钮显示短考；重启 DSH 后所有会话都显示短考，但 host 投影里明明是 `long`。
-- **根因**：投影的 wire 值是内部字符串 `{ mode: "long" | "short" }`，客户端却用解析命令文案的 `parseMode`（找“长考”两个字）去解析 `"long"`——永远找不到，一律当短考。点击后的 `fallback` 只在当前页面压得住它；组件重挂载（切会话）或页面重启后 fallback 没了，就露馅。
-- 修法：
-  1. client：新增 `parseWireMode(value)`，按 `"long"` / `"short"` 判定，`projected` 改用它（**真正的修复**）。
-  2. client：`inject` 多给 `getCached`；`ModeChip` 用 `useState` 初始化时读回本客户端最近一次命令回执，切会话重挂载时第一帧就是对的（fallback 仍优先于投影）。
-  3. client：投影迟迟不来时才延迟 1200ms 发一次 `/mode status` 兜底，避免每次打开会话都落命令行。
-  4. host：`wire.summary: false`，模式不进 Session summary，避免列表缓存落后一整轮。
-- 回归：`test-chip.cjs`（mock React 渲染 chip，5 例；`node test-chip.cjs [client 路径]`）；旧版 `projection long → 短考` FAIL，新版全 PASS。
-- 备份：`_backup/2026-11-22-mode-chip/`。
-- 验证：刷新页面后「点长考 → 切走 → 切回」保持长考；重启后原本 long 的会话也显示长考。
+- **投影的 wire 值不要用文案解析**：投影里是内部字符串 `{ mode: "long" | "short" }`，早期客户端却按“长考”两个字去 `parseMode`，永远找不到、一律当短考；点击后的 fallback 只在当前页面压得住，切会话或重启就露馅。现在按 `"long"` / `"short"` 判定（`parseWireMode`）。
+- 客户端在 `useState` 初始化时读回最近一次命令回执（`getCached`），切会话重挂载的第一帧就是对的。
+- 投影迟迟不来时才延迟 1200ms 发一次 `/mode status` 兜底，避免每次打开会话都落一行命令行。
+- host 的 `wire.summary: false`：模式不进 Session summary，避免列表缓存落后一整轮。
+
+## 回归
+
+`test-chip.cjs`（mock React 渲染 chip，5 例；`node test-chip.cjs [client 路径]`）。
 
 ## 怎么改
 
